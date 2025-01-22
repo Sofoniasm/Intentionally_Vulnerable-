@@ -1,11 +1,13 @@
 trigger:
-- main
+- master
 
-pool: 
-  vmImage: 'ubuntu-latest'
+pool:
+  vmImage: ubuntu-latest
 
-steps:
-- script: |
-    echo "This is a demo YAML file for DevSecOps pipline"
-  displayName: "Print Console Text for Demo"  
-    
+jobs:
+- job: Sonar_SAST_Scan_Job
+  container: maven:3.8.1-openjdk-17-slim
+  steps:
+  - script: |
+      mvn verify package sonar:sonar -Dsonar.host.url=https://sonarcloud.io/ -Dsonar.organization=azuredevopsdevsecopsoorg -Dsonar.projectKey=azuredevsecopsoprojectkey -Dsonar.token=7864949754
+    displayName: "Integrate SAST using SonarCloud to populate code coverage and secure pipeline variable in Azure DevOps DevSecOps Pipeline"
